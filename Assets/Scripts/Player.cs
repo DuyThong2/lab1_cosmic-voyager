@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     Vector2 rawInput;
 
+    public InputActionReference move;
+    public Rigidbody2D rb;
+
     [SerializeField] float paddingLeft;
     [SerializeField] float paddingRight;
     [SerializeField] float paddingTop;
@@ -45,11 +48,8 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        Vector2 delta = rawInput * moveSpeed * Time.deltaTime;
-        Vector2 newPos = new Vector2();
-        newPos.x = Mathf.Clamp(transform.position.x + delta.x, minBounds.x + paddingLeft, maxBounds.x - paddingRight);
-        newPos.y = Mathf.Clamp(transform.position.y + delta.y, minBounds.y + paddingBottom, maxBounds.y - paddingTop);
-        transform.position = newPos;
+        Vector2 input = move.action.ReadValue<Vector2>();
+        rb.linearVelocity = input * moveSpeed ;
     }
 
     /*void Move()
