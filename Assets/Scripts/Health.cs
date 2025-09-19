@@ -13,9 +13,9 @@ public class Health : MonoBehaviour
     [SerializeField] bool applyCameraShake;
     //CameraShake cameraShake;
 
-    //AudioPlayer audioPlayer;
-    //ScoreKeeper scoreKeeper;
-    //LevelManager levelManager;
+    AudioPlayer audioPlayer;
+    ScoreKeeper scoreKeeper;
+    LevelManager levelManager;
 
     public bool invulnerable;
     [SerializeField] int maxHealth = 50;
@@ -31,9 +31,9 @@ public class Health : MonoBehaviour
     void Awake()
     {
         //cameraShake = Camera.main.GetComponent<CameraShake>();
-        //audioPlayer = FindObjectOfType<AudioPlayer>();
-        //scoreKeeper = FindObjectOfType<ScoreKeeper>();
-        //levelManager = FindObjectOfType<LevelManager>();
+        audioPlayer = FindObjectOfType<AudioPlayer>();
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -70,14 +70,14 @@ public class Health : MonoBehaviour
 
     void Die()
     {
-        //if (!isPlayer)
-        //{
-        //    scoreKeeper.ModifyScore(score);
-        //}
-        //else
-        //{
-        //    levelManager.LoadGameOver();
-        //}
+        if (!isPlayer)
+        {
+            scoreKeeper.ModifyScore(score);
+        }
+        else
+        {
+            levelManager.LoadGameOver();
+        }
         Destroy(gameObject);
     }
 

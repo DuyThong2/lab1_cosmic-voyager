@@ -19,14 +19,14 @@ public class Player : MonoBehaviour
     Vector2 minBounds;
     Vector2 maxBounds;
 
-    //Shooter shooter;
+    Shooter shooter;
 
     float speedMultiplier = 1f;
     Coroutine speedCo;
 
     void Awake()
     {
-        //shooter = GetComponent<Shooter>();
+        shooter = GetComponent<Shooter>();
     }
 
     void Start()
@@ -46,20 +46,20 @@ public class Player : MonoBehaviour
         maxBounds = mainCamera.ViewportToWorldPoint(new Vector2(1, 1));
     }
 
-    void Move()
-    {
-        Vector2 input = move.action.ReadValue<Vector2>();
-        rb.linearVelocity = input * moveSpeed ;
-    }
+    //void Move()
+    //{
+    //    Vector2 input = move.action.ReadValue<Vector2>();
+    //    rb.linearVelocity = input * moveSpeed ;
+    //}
 
-    /*void Move()
+    void Move()
     {
         Vector2 delta = rawInput * (moveSpeed * speedMultiplier) * Time.deltaTime; // ← thêm speedMultiplier
         Vector2 newPos = new Vector2();
         newPos.x = Mathf.Clamp(transform.position.x + delta.x, minBounds.x + paddingLeft, maxBounds.x - paddingRight);
         newPos.y = Mathf.Clamp(transform.position.y + delta.y, minBounds.y + paddingBottom, maxBounds.y - paddingTop);
         transform.position = newPos;
-    }*/
+    }
 
 
     void OnMove(InputValue value)
@@ -70,10 +70,10 @@ public class Player : MonoBehaviour
 
     void OnFire(InputValue value)
     {
-        /*if (shooter != null)
+        if (shooter != null)
         {
             shooter.isFiring = value.isPressed;
-        }*/
+        }
     }
 
     public void BoostSpeed(float factor, float duration)
