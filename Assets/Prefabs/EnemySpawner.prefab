@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3459627074331062963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6135554171219776180}
+  - component: {fileID: 664836347967107375}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6135554171219776180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459627074331062963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.06442, y: -0.12092, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &664836347967107375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459627074331062963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a333edb1c94f84e9b5d9e9e9160b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  waveConfigs:
+  - {fileID: 11400000, guid: 1648d8f0f29d64b4a83ce32beedbd20d, type: 2}
+  - {fileID: 11400000, guid: c0a6210a8462097439464d4f5dd2e3fe, type: 2}
+  - {fileID: 11400000, guid: 9e6146d3960595249963f131b4f8e72b, type: 2}
+  - {fileID: 11400000, guid: d7b1408da9a391f42a483b2f46e492b6, type: 2}
+  - {fileID: 11400000, guid: e3efc7800ea9be144b98f237452bd682, type: 2}
+  - {fileID: 11400000, guid: 3013445288a975249b44270c239d8466, type: 2}
+  - {fileID: 11400000, guid: 43037a5de31adb3498c75a4f3e788e3b, type: 2}
+  - {fileID: 11400000, guid: fbac39da2cf13aa40a0cc9df4c857488, type: 2}
+  timeBetweenWaves: 0
+  isLooping: 1
