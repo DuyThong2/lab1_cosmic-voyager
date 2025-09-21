@@ -7,6 +7,7 @@ public class ShieldController : MonoBehaviour
     [Header("Shield")]
     [SerializeField] public float duration = 5f;
     [SerializeField]public float cooldown = 3f;
+    [SerializeField] public ParticleSystem shieldVFX;
 
     public int charges { get; private set; }
     public float activeRemaining { get; private set; }
@@ -33,6 +34,7 @@ public class ShieldController : MonoBehaviour
             {
                 activeRemaining = 0f;
                 cooldownRemaining = cooldown;
+                if(shieldVFX) shieldVFX.Stop(); // Tắt shield VFX
                 Debug.Log("Shield expired → start cooldown");
                 OnChanged?.Invoke();
             }
@@ -86,6 +88,7 @@ public class ShieldController : MonoBehaviour
                 
         }
         
+        if (shieldVFX) shieldVFX.Play(); // Bật shield VFX
 
         Debug.Log($"Shield ACTIVATED! duration={duration}s, remaining charges={charges}");
         OnChanged?.Invoke();
