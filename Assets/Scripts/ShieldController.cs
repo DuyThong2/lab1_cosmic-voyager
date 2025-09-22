@@ -8,6 +8,7 @@ public class ShieldController : MonoBehaviour
     [SerializeField] public float duration = 5f;
     [SerializeField]public float cooldown = 3f;
     [SerializeField] public ParticleSystem shieldVFX;
+    [SerializeField] public ParticleSystem shieldChargeVFX;
 
     public int charges { get; private set; }
     public float activeRemaining { get; private set; }
@@ -47,6 +48,7 @@ public class ShieldController : MonoBehaviour
             // Khi cooldown vừa chạm 0 -> gọi AddCharge
             if (cooldownRemaining <= 0f)
             {
+                shieldChargeVFX.Play(); // Bật shield charge VFX
                 AddCharge(false);
             }
             OnChanged?.Invoke();
@@ -87,7 +89,7 @@ public class ShieldController : MonoBehaviour
             Debug.Log(health.invulnerable);
                 
         }
-        
+        if (shieldChargeVFX) shieldChargeVFX.Stop(); // Tắt shield charge VFX
         if (shieldVFX) shieldVFX.Play(); // Bật shield VFX
 
         Debug.Log($"Shield ACTIVATED! duration={duration}s, remaining charges={charges}");
