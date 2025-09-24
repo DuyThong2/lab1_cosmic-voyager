@@ -6,7 +6,7 @@ public class ShieldController : MonoBehaviour
 {
     [Header("Shield")]
     [SerializeField] public float duration = 5f;
-    [SerializeField]public float cooldown = 3f;
+    [SerializeField] public float cooldown = 3f;
     [SerializeField] public ParticleSystem shieldVFX;
     [SerializeField] public ParticleSystem shieldChargeVFX;
 
@@ -19,7 +19,12 @@ public class ShieldController : MonoBehaviour
     Health health;
     public event Action OnChanged;
 
-    void Awake() {
+    // === CHEAT ===
+    [Header("Cheat / Debug")]
+    [SerializeField] bool cheatGodMode = false;  // trạng thái toggle
+
+    void Awake()
+    {
         health = GetComponent<Health>();
         cooldownRemaining = cooldown;
     }
@@ -35,7 +40,7 @@ public class ShieldController : MonoBehaviour
             {
                 activeRemaining = 0f;
                 cooldownRemaining = cooldown;
-                if(shieldVFX) shieldVFX.Stop(); // Tắt shield VFX
+                if (shieldVFX) shieldVFX.Stop();
                 Debug.Log("Shield expired → start cooldown");
                 OnChanged?.Invoke();
             }
@@ -44,17 +49,22 @@ public class ShieldController : MonoBehaviour
         else if (cooldownRemaining > 0f)
         {
             cooldownRemaining = Mathf.Max(0f, cooldownRemaining - dt);
-            Debug.Log($"Shield cooldown remaining: {cooldownRemaining:F1} s");
-            // Khi cooldown vừa chạm 0 -> gọi AddCharge
+            // Debug.Log($"Shield cooldown remaining: {cooldownRemaining:F1} s");
             if (cooldownRemaining <= 0f)
             {
-                shieldChargeVFX.Play(); // Bật shield charge VFX
+                if (shieldChargeVFX) shieldChargeVFX.Play();
                 AddCharge(false);
             }
             OnChanged?.Invoke();
         }
-    }
 
+        // === CHEAT: đảm bảo bất tử luôn bật khi cheatGodMode = true,
+        // kể cả khi coroutine trong Health đã cố tắt.
+        if (cheatGodMode && health && !health.invulnerable)
+        {
+            health.invulnerable = true;
+        }
+    }
 
     // Input System sẽ gọi hàm này
     public void OnShield(InputValue value)
@@ -63,6 +73,32 @@ public class ShieldController : MonoBehaviour
         {
             Debug.Log("OnShield action pressed!");
             TryActivate();
+        }
+    }
+
+    // === CHEAT: Input System gọi hàm này để toggle
+    public void OnCheat(InputValue value)
+    {
+        if (!value.isPressed) return;
+
+        cheatGodMode = !cheatGodMode;
+
+        if (health)
+        {
+            health.invulnerable = cheatGodMode;
+        }
+
+        Debug.Log($"[CHEAT] God Mode {(cheatGodMode ? "ON" : "OFF")}");
+        OnChanged?.Invoke();
+
+        // (tuỳ chọn) hiệu ứng nhỏ khi bật cheat
+        if (cheatGodMode)
+        {
+            if (shieldVFX && !shieldVFX.isPlaying) shieldVFX.Play();
+        }
+        else
+        {
+            if (shieldVFX && shieldVFX.isPlaying) shieldVFX.Stop();
         }
     }
 
@@ -84,13 +120,13 @@ public class ShieldController : MonoBehaviour
 
         charges = Mathf.Max(0, charges - 1);
         activeRemaining = duration;
-        if (health) {
+        if (health)
+        {
             health.SetInvulnerable(duration);
             Debug.Log(health.invulnerable);
-                
         }
-        if (shieldChargeVFX) shieldChargeVFX.Stop(); // Tắt shield charge VFX
-        if (shieldVFX) shieldVFX.Play(); // Bật shield VFX
+        if (shieldChargeVFX) shieldChargeVFX.Stop();
+        if (shieldVFX) shieldVFX.Play();
 
         Debug.Log($"Shield ACTIVATED! duration={duration}s, remaining charges={charges}");
         OnChanged?.Invoke();

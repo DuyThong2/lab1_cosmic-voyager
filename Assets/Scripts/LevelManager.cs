@@ -29,6 +29,11 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(WaitAndLoad("GameOver", sceneLoadDelay));
     }
 
+    public void LoadInstruction()
+    {
+        StartCoroutine(WaitAndLoad("Instruction", sceneLoadDelay));
+    }
+
     public void QuitGame()
     {
         Debug.Log("Quitting Game...");
