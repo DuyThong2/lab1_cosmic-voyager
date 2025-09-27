@@ -13,7 +13,7 @@ public class Pickup : MonoBehaviour
         switch (data.type)
         {
             case CollectibleType.Coin:
-                FindObjectOfType<ScoreKeeper>()?.ModifyScore(data.value);
+                FindObjectOfType<ScoreKeeper>()?.ModifyScore(data.value); 
                 break;
 
             case CollectibleType.Fuel:

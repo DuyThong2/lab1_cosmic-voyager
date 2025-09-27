@@ -7,7 +7,7 @@ public class ShieldController : MonoBehaviour
     [Header("Shield")]
     [SerializeField] public float duration = 5f;
     [SerializeField] public float cooldown = 3f;
-    [SerializeField] public ParticleSystem shieldVFX;
+    [SerializeField] public GameObject shieldVFX;
     [SerializeField] public ParticleSystem shieldChargeVFX;
 
     public int charges { get; private set; }
@@ -23,25 +23,47 @@ public class ShieldController : MonoBehaviour
     [Header("Cheat / Debug")]
     [SerializeField] bool cheatGodMode = false;  // trạng thái toggle
 
+    private float blinkTimer = 0f;
+    [SerializeField] private float blinkInterval = 0.2f;
+    private bool isShieldVisible = true;
+
     void Awake()
     {
         health = GetComponent<Health>();
         cooldownRemaining = cooldown;
     }
+    void Start()
+    {
+        shieldVFX.SetActive(false);
+    }
+
 
     void Update()
     {
         float dt = Time.deltaTime;
 
-        if (IsActive)
+ 
+        
+
+            if (IsActive)
         {
             activeRemaining -= dt;
-            if (activeRemaining <= 0f)
+                if (activeRemaining <= 3f)
+                {
+                    blinkTimer += dt;
+                    if (blinkTimer >= blinkInterval)
+                    {
+                        blinkTimer = 0f;
+                        isShieldVisible = !isShieldVisible;
+                        if (shieldVFX) shieldVFX.SetActive(isShieldVisible);
+                    }
+                }
+                if (activeRemaining <= 0f)
             {
                 activeRemaining = 0f;
                 cooldownRemaining = cooldown;
-                if (shieldVFX) shieldVFX.Stop();
-                Debug.Log("Shield expired → start cooldown");
+                    if (shieldVFX) shieldVFX.SetActive(false);
+                    Debug.Log("Shield expired → start cooldown");
                 OnChanged?.Invoke();
             }
             else OnChanged?.Invoke();
@@ -94,11 +116,11 @@ public class ShieldController : MonoBehaviour
         // (tuỳ chọn) hiệu ứng nhỏ khi bật cheat
         if (cheatGodMode)
         {
-            if (shieldVFX && !shieldVFX.isPlaying) shieldVFX.Play();
+            if (shieldVFX) shieldVFX.SetActive(true);
         }
         else
         {
-            if (shieldVFX && shieldVFX.isPlaying) shieldVFX.Stop();
+            if (shieldVFX) shieldVFX.SetActive(false);
         }
     }
 
@@ -126,7 +148,7 @@ public class ShieldController : MonoBehaviour
             Debug.Log(health.invulnerable);
         }
         if (shieldChargeVFX) shieldChargeVFX.Stop();
-        if (shieldVFX) shieldVFX.Play();
+        if (shieldVFX) shieldVFX.SetActive(true);
 
         Debug.Log($"Shield ACTIVATED! duration={duration}s, remaining charges={charges}");
         OnChanged?.Invoke();

@@ -17,4 +17,4 @@ MonoBehaviour:
   value: 150
   duration: 5
   factor: 1
-  bypassCooldown: 0
+  bypassCooldown: 1
