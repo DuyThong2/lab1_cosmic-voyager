@@ -71,19 +71,25 @@ public class ShieldController : MonoBehaviour
         else if (cooldownRemaining > 0f)
         {
             cooldownRemaining = Mathf.Max(0f, cooldownRemaining - dt);
-            // Debug.Log($"Shield cooldown remaining: {cooldownRemaining:F1} s");
             if (cooldownRemaining <= 0f)
             {
-                if (shieldChargeVFX) shieldChargeVFX.Play();
+                
                 AddCharge(false);
             }
             OnChanged?.Invoke();
+        }else if (cooldownRemaining <= 0f)
+        {
+            if (shieldChargeVFX)
+            {
+                shieldChargeVFX.Play();
+            }
         }
 
         // === CHEAT: đảm bảo bất tử luôn bật khi cheatGodMode = true,
         // kể cả khi coroutine trong Health đã cố tắt.
         if (cheatGodMode && health && !health.invulnerable)
         {
+            if (shieldVFX) shieldVFX.SetActive(true);
             health.invulnerable = true;
         }
     }
