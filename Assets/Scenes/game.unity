@@ -506,6 +506,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3208709930648237968, guid: 76910055c44714647b1557bef2afc9f4, type: 3}
+      propertyPath: shootingVolume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3308156664493041155, guid: 76910055c44714647b1557bef2afc9f4, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -6054,10 +6058,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
+  m_fontSize: 18
   m_fontSizeBase: 8
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
